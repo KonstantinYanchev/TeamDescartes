@@ -11,8 +11,13 @@ app.boundingBox = (function() {
         this.height = h;
     }
 
+    BoundingBox.prototype.contains = function(x, y) {
+        return !!(x >= this.x && x <= this.x + this.width &&
+        y >= this.y && y <= this.y + this.height);
+    };
+
     BoundingBox.prototype.intersects = function(shape) {
-        var offset = 0;
+        var offset = 40;
 
         if(this.contains(shape.x - offset, shape.y - offset) ||
             this.contains(shape.x + shape.width - offset, shape.y - offset)||

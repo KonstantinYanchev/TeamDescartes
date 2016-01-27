@@ -43,12 +43,20 @@ app.engine = (function () {
 
     function _update() {
         // Updates all objects in the game
-        if(!this.wiz.update(this.gameIsOver)) {// true if the wizard is alive and false if otherwise
+        /**
+        this.pipes.forEach(function (pipe) {
+            if (this.wiz.boundingBox.intersects(pipe.boundingBox)){
+                this.gameIsOver = true;
+            }
+        });
+         **/
+
+        if(!this.wiz.update(this.gameIsOver, this.pipes)) {
             this.gameIsOver = true;
         }
         this.pipes.forEach(function (pipe) {
             pipe.update();
-        })
+        });
         this.bckg.update();
     }
 

@@ -14,14 +14,15 @@ app.pipe = (function () {
         this.img.src = 'img/column+wiz.png';
         this.sprite = app.sprite.render(this.img, imgX, imgY, this.width, this.height);
         this.boundingBox = app.boundingBox.load(x,y,w,h);
-        this.counterToMove = 0;
     }
 
     Pipe.prototype.update = function() {
-            this.x--;
-            if(this.x < -50) {
-                this.x = 300;
-            }
+        this.x--;
+        this.boundingBox.x--;
+        if(this.x < -50) {
+            this.x = 300;
+            this.boundingBox.x = 300;
+        }
     };
 
     Pipe.prototype.draw =  function(ctx) {

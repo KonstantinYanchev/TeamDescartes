@@ -9,13 +9,13 @@ app.wizard = (function () {
         this.reachEndPointOfJump = false;
         this.x = 25;
         this.y = 60;
-        this.height = 0; //TODO find appropriate value
-        this.width = 0; //TODO find appropriate value
+        this.height = 10; //TODO find appropriate value
+        this.width = 10; //TODO find appropriate value
         this.img = new Image();
         this.img.src = 'img/wz_anim.png';
         this.imgExplode = new Image();
         this.imgExplode.src = "img/wz_explode.png";
-        this.gravity = 2;
+        this.gravity = 1;
         this.jumpHeight = 20;// Maximum height in px
         this.isJumping = false; // 1 -> jumping, 0 -> not jumping
         this.frameNum = 0; // index of next sprite from sprite_wiz array that has to be drawn
@@ -35,7 +35,7 @@ app.wizard = (function () {
         Wizard.isJumping = true;
         if(Wizard.isJumping == 1) console.log('jump function called! isJumping = ' + Wizard.isJumping);
     };
-    Wizard.prototype.update = function(isDead){
+    Wizard.prototype.update = function(isDead, pipes){
         if(!isDead) {
             if (this.reachEndPointOfJump) {
                 if (this.floatInJumpCounter == 3) {
@@ -44,20 +44,19 @@ app.wizard = (function () {
                 }
                 this.floatInJumpCounter++;
             } else {
-                this.gravity = 2;
+                this.gravity = 1;
             }
             this.y += this.gravity;
-            console.log('update function is jumping = ' + this.isJumping);
+            this.boundingBox.y += this.gravity;
             if (Wizard.isJumping == true) {
-                this.y -= 5;
+                this.y -= 3;
                 this.jumpHeight -= 2;
             }
             if (this.jumpHeight == 0) {
-                this.jumpHeight = 20;
+                this.jumpHeight = 24;
                 Wizard.isJumping = false;
                 this.reachEndPointOfJump = true;
                 this.gravity = 0;
-                this.y += this.gravity;
             }
 
             if (this.y <= 20 || this.y >= 190) {
@@ -85,7 +84,6 @@ app.wizard = (function () {
             }
         }
 
-        console.log('Wizard drawn');
         ctx.restore();
     };
 
