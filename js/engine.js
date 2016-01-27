@@ -57,7 +57,7 @@ app.engine = (function () {
         this.bckg.draw(this.ctx);
         this.bckg.update();
         this.bckg.draw(this.ctx);
-        this.wiz.draw(this.ctx);
+        this.wiz.draw(this.ctx, this.gameIsOver);
         this.pipes.forEach(function (pipe) {
             pipe.draw(this.ctx);
         })

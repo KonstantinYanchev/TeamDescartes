@@ -58,10 +58,12 @@ app.wizard = (function () {
                 this.reachEndPointOfJump = true;
                 this.gravity = 0;
                 this.y += this.gravity;
-                if (this.y <= 20 || this.y >= 190) {
-                    return false;
-                } // If the wiz hits the ground/sky
             }
+
+            if (this.y <= 20 || this.y >= 190) {
+                return false;
+            }
+
             return true;
         }
         return false;
