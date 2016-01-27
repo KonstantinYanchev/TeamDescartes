@@ -46,21 +46,6 @@ app.wizard = (function () {
             } else {
                 this.gravity = 2;
             }
-            this.floatInJumpCounter++;
-        }else {
-            this.gravity = 2;
-        }
-        this.y += this.gravity;
-        console.log('update function is jumping = ' + this.isJumping);
-        if(Wizard.isJumping == true) {
-            this.y -= 5;
-            this.jumpHeight -= 2;
-        }
-        if(this.jumpHeight == 0) {
-            this.jumpHeight = 20;
-            Wizard.isJumping = false;
-            this.reachEndPointOfJump = true;
-            this.gravity = 0;
             this.y += this.gravity;
             console.log('update function is jumping = ' + this.isJumping);
             if (Wizard.isJumping == true) {
@@ -68,16 +53,18 @@ app.wizard = (function () {
                 this.jumpHeight -= 2;
             }
             if (this.jumpHeight == 0) {
-                this.jumpHeight = 26;
+                this.jumpHeight = 20;
                 Wizard.isJumping = false;
                 this.reachEndPointOfJump = true;
                 this.gravity = 0;
+                this.y += this.gravity;
+                if (this.y <= 20 || this.y >= 190) {
+                    return false;
+                } // If the wiz hits the ground/sky
             }
-            if (this.y <= 20 || this.y >= 190) {
-                return false;
-            } // If the wiz hits the ground/sky
             return true;
         }
+        return false;
     };
     Wizard.prototype.draw = function(ctx, isDead){
         ctx.save();

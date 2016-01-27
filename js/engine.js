@@ -5,15 +5,8 @@
 var app = app || {};
 
 app.engine = (function () {
-    window.requestAnimationFrame = window.requestAnimationFrame
-        || window.webkitRequestAnimationFrame
-        || window.mozRequestAnimationFrame || function(callback) {
-        window.setTimeout(callback, 1000 / 20);
-    };
     function Engine() {
 
-        this.gameIsRunning = false;
-        this.gameIsOver = false;
     }
 
      function _init() {
@@ -30,6 +23,8 @@ app.engine = (function () {
         this.gameOverImg.src = "img/gameover.png";
         this.gameOverSprite = app.sprite.render(this.gameOverImg,
             0, 0, this.gameOverImg.width, this.gameOverImg.height);
+         this.gameIsRunning = false;
+         this.gameIsOver = false;
         var width = window.innerWidth;
         var height = window.innerHeight;
         if (width >= 500) {
@@ -66,8 +61,8 @@ app.engine = (function () {
         this.pipes.forEach(function (pipe) {
             pipe.draw(this.ctx);
         })
-        this.wiz.draw(this.ctx, this.gameIsOver);
         this.pipe.draw(this.ctx);
+
         if(this.gameIsOver) {
             this.gameOverSprite.draw(this.ctx, this.canvas.width/2-this.gameOverImg.width/2, this.canvas.height/2-this.gameOverImg.height/2);
         }
@@ -80,7 +75,7 @@ app.engine = (function () {
         console.log("Start button clicked. Game is running.");
         var now;
         var then;
-        var fps = 20; // 1000 / frames per second;
+        var fps = 30; // 1000 / frames per second;
         var loop = function() {
                 now = Date.now();
                 var delta = (now - then);
@@ -98,6 +93,12 @@ app.engine = (function () {
 
         then = Date.now();
         setTimeout(window.requestAnimationFrame(loop, this.canvas), 1000);
+
+         window.requestAnimationFrame = window.requestAnimationFrame
+             || window.webkitRequestAnimationFrame
+             || window.mozRequestAnimationFrame || function(callback) {
+                 window.setTimeout(callback, 1000 / 20);
+             };
     };
 
     return {
