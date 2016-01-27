@@ -5,6 +5,11 @@
 var app = app || {};
 
 app.engine = (function () {
+    window.requestAnimationFrame = window.requestAnimationFrame
+        || window.webkitRequestAnimationFrame
+        || window.mozRequestAnimationFrame || function(callback) {
+        window.setTimeout(callback, 1000 / 20);
+    };
     function Engine() {
 
         this.gameIsRunning = false;
@@ -20,6 +25,11 @@ app.engine = (function () {
                     app.pipe.load(300,140,90,200, 100, 100),
                     app.pipe.load(120,0,90,290, 284, 380),
                     app.pipe.load(300,0,90,250, 280, 430),];
+        this.pipe = app.pipe.load(0,0,0,0);
+        this.gameOverImg = new Image();
+        this.gameOverImg.src = "img/gameover.png";
+        this.gameOverSprite = app.sprite.render(this.gameOverImg,
+            0, 0, this.gameOverImg.width, this.gameOverImg.height);
         var width = window.innerWidth;
         var height = window.innerHeight;
         if (width >= 500) {
@@ -30,7 +40,7 @@ app.engine = (function () {
         this.canvas.width = width;
         this.canvas.height = height;
 
-        document.body.onclick = this.wiz.jump; //TODO: Implement jump on mouse click
+        document.body.onclick = this.wiz.jump;
 
         console.log("canvas, context, wizard and pipes initialized");
         console.log("wizard sprite created");
@@ -38,9 +48,8 @@ app.engine = (function () {
 
     function _update() {
         // Updates all objects in the game
-        if(!this.wiz.update()) {// true if the wizard is alive and false if otherwise
+        if(!this.wiz.update(this.gameIsOver)) {// true if the wizard is alive and false if otherwise
             this.gameIsOver = true;
-            console.log('WIZARD DIED');
         }
         this.pipes.forEach(function (pipe) {
             pipe.update();
@@ -57,6 +66,11 @@ app.engine = (function () {
         this.pipes.forEach(function (pipe) {
             pipe.draw(this.ctx);
         })
+        this.wiz.draw(this.ctx, this.gameIsOver);
+        this.pipe.draw(this.ctx);
+        if(this.gameIsOver) {
+            this.gameOverSprite.draw(this.ctx, this.canvas.width/2-this.gameOverImg.width/2, this.canvas.height/2-this.gameOverImg.height/2);
+        }
 
     }
 
@@ -66,9 +80,8 @@ app.engine = (function () {
         console.log("Start button clicked. Game is running.");
         var now;
         var then;
-        var fps = 37; // 1000 / frames per second;
+        var fps = 20; // 1000 / frames per second;
         var loop = function() {
-            if(!this.gameIsOver) {
                 now = Date.now();
                 var delta = (now - then);
                 while (delta < fps) {
@@ -80,10 +93,7 @@ app.engine = (function () {
                 _update();
                 _render();
                 window.requestAnimationFrame(loop, this.canvas);
-            } else {
-                // TODO: Implement animation for game-over state
-                console.log('game stopped');
-            }
+
         };
 
         then = Date.now();
