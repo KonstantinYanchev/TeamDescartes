@@ -4,30 +4,37 @@
 var app = app || {};
 
 app.pipe = (function () {
-    function Pipe (x,y,w,h){
+    function Pipe (x,y,w,h, imgX,imgY){
         this.x = x;
         this.y = y;
         this.width = w;
         this.height = h;
+        this.img = new Image();
+        this.delta = 300;
+        this.img.src = 'img/column+wiz.png';
+        this.sprite = app.sprite.render(this.img, imgX, imgY, this.width, this.height);
         this.boundingBox = app.boundingBox.load(x,y,w,h);
+        this.counterToMove = 0;
     }
 
     Pipe.prototype.update = function() {
-        // TODO: How will our pipes behave ?
+            this.x--;
+            if(this.x < -50) {
+                this.x = 300;
+            }
     };
+
     Pipe.prototype.draw =  function(ctx) {
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
-
-        // TODO: The pipe should draw itself on the canvas
-
+        this.sprite.draw(ctx, this.x, this.y);
         ctx.restore();
     };
 
     return {
-        load: function(x,y,w,h){
-            return new Pipe(x,y,w,h);
+        load: function(x,y,w,h, imgX, imgY){
+            return new Pipe(x,y,w,h, imgX, imgY);
         }
     }
 }());

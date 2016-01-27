@@ -16,7 +16,10 @@ app.engine = (function () {
         this.ctx = this.canvas.getContext('2d');
         this.bckg = app.background.load(this.canvas);
         this.wiz = app.wizard.load();
-        this.pipe = app.pipe.load(0,0,0,0); //TODO find appropriate values and make other pipes in array
+        this.pipes = [app.pipe.load(120,170,90,170, 100, 100),
+                    app.pipe.load(300,140,90,200, 100, 100),
+                    app.pipe.load(120,0,90,290, 284, 380),
+                    app.pipe.load(300,0,90,250, 280, 430),];
         var width = window.innerWidth;
         var height = window.innerHeight;
         if (width >= 500) {
@@ -39,7 +42,9 @@ app.engine = (function () {
             this.gameIsOver = true;
             console.log('WIZARD DIED');
         }
-        this.pipe.update();
+        this.pipes.forEach(function (pipe) {
+            pipe.update();
+        })
         this.bckg.update();
     }
 
@@ -49,7 +54,9 @@ app.engine = (function () {
         this.bckg.update();
         this.bckg.draw(this.ctx);
         this.wiz.draw(this.ctx);
-        this.pipe.draw(this.ctx);
+        this.pipes.forEach(function (pipe) {
+            pipe.draw(this.ctx);
+        })
 
     }
 

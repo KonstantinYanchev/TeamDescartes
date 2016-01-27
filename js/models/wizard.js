@@ -47,7 +47,7 @@ app.wizard = (function () {
             this.jumpHeight -= 2;
         }
         if(this.jumpHeight == 0) {
-            this.jumpHeight = 26;
+            this.jumpHeight = 20;
             Wizard.isJumping = false;
             this.reachEndPointOfJump = true;
             this.gravity = 0;
