@@ -65,7 +65,6 @@ var canvas,
 
             var n = this.animation[this.frame];
             s_bird[n].draw(ctx, -s_bird[n].width / 2, -s_bird[n].height / 2);
-
             ctx.beginPath();
             ctx.arc(0, 0, this.radius, 0, 2 * Math.PI);
             ctx.restore();
@@ -81,12 +80,12 @@ var canvas,
 
         update: function() {
             if(frames % 100 === 0) {
-                var topPositionOfPipe = height - (s_pipeSouth.height + s_fg.height + 120 + 200 * Math.random());
+                var topPositionOfPipe = height - (s_pipeNorth.height + s_fg.height + 120 + 200 * Math.random());
                 this._pipes.push({
                     x: 500,
                     y: topPositionOfPipe,
-                    width: s_pipeSouth.width,
-                    height: s_pipeSouth.height
+                    width: s_pipeNorth.width,
+                    height: s_pipeNorth.height
                 });
             }
 
@@ -105,10 +104,10 @@ var canvas,
                     var differenceY1 = bird.y - closestY1;
                     var differenceY2 = bird.y - closestY2;
 
-                    var distance1 = differenceX * differenceX + differenceY1 * differenceY1;
-                    var distance2 = differenceX * differenceX + differenceY2 * differenceY2;
+                    var distance1 = differenceX * differenceX + differenceY1 * differenceY1 - 10;
+                    var distance2 = differenceX * differenceX + differenceY2 * differenceY2 - 10;
 
-                    var radius = bird.radius * bird.radius;
+                    var radius = bird.radius * bird.radius - 10;
 
                     if(radius > distance1 || radius > distance2) {
                         currentState = states.Score;
@@ -128,7 +127,7 @@ var canvas,
             for(var i = 0, len = this._pipes.length; i < len; i++) {
                 var p = this._pipes[i];
                 s_pipeSouth.draw(ctx, p.x, p.y);
-                s_pipeSouth.draw(ctx, p.x, p.y + 80 + p.height);
+                s_pipeNorth.draw(ctx, p.x, p.y + 80 + p.height);
             }
         }
     };
@@ -197,7 +196,7 @@ function main() {
             height: s_buttons.Restart.height,
         };
         run();
-    }
+    };
 
     img.src = 'images/sheet.png'
 }
@@ -207,7 +206,7 @@ function run() {
         update();
         render();
         window.requestAnimationFrame(loop, canvas);
-    }
+    };
 
     window.requestAnimationFrame(loop, canvas);
 }

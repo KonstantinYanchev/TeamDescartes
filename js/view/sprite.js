@@ -12,7 +12,8 @@ var
     s_splash,
     s_buttons,
     s_numberS,
-    s_numberB;
+    s_numberB,
+    s_wizardCrash;
 
 
 function Sprite(img, x, y, width, height) {
@@ -36,6 +37,7 @@ function initSprites(img) {
     s_bg.color = "#83C7DC";
     s_fg = new Sprite(img, 139, 0, 111,  56);
 
+    s_wizardCrash = new Sprite(img,393, 409, 63, 59 ); // 331.351
     s_pipeNorth = new Sprite(img, 251, 0, 26, 200);
     s_pipeSouth = new Sprite(img, 277, 0, 26, 200);
     s_text = {
