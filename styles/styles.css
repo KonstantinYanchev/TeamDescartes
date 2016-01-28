@@ -1,0 +1,23 @@
+/***General Styles***/
+
+body {
+    background-image: url("../images/back.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/***Canvas Styles***/
+
+canvas {
+    display: block;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 5px solid orange;
+    border-radius: 10px;
+    box-shadow: 0 0 50px black;
+}
