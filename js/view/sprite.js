@@ -32,7 +32,6 @@ function initSprites(img) {
     s_bird = [
         new Sprite(img, 156, 115, 22, 22)
     ];
-new Sprite()
     s_bg = new Sprite(img,   0, 0, 138, 114);
     s_bg.color = "#83C7DC";
     s_fg = new Sprite(img, 139, 0, 111,  56);
